@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { Plus, X, Loader2 } from 'lucide-react';
 import { createAppointment } from '@/lib/actions';
 import { APPOINTMENT_KIND_LABEL, type AppointmentKind } from '@/lib/types';
@@ -14,6 +14,17 @@ interface OrderOption {
 export function NewAppointmentSheet({ orders }: { orders: OrderOption[] }) {
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
@@ -35,11 +46,35 @@ export function NewAppointmentSheet({ orders }: { orders: OrderOption[] }) {
 
       {open && (
         <div
-          className="fixed inset-0 z-50 bg-ink/40 backdrop-blur-sm animate-fade-in flex items-end sm:items-center justify-center sm:p-4"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9999,
+            backgroundColor: 'rgba(31, 42, 36, 0.5)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+            overflowY: 'auto',
+          }}
           onClick={() => setOpen(false)}
         >
           <div
-            className="relative w-full sm:max-w-lg bg-bg rounded-t-3xl sm:rounded-2xl shadow-lift animate-slide-up max-h-[90dvh] overflow-y-auto"
+            style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '32rem',
+              maxHeight: 'calc(100vh - 2rem)',
+              backgroundColor: 'rgb(247, 245, 240)',
+              borderRadius: '1rem',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              overflowY: 'auto',
+              margin: 'auto',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="sticky top-0 bg-bg/95 backdrop-blur border-b border-border px-5 py-4 flex items-center justify-between z-10">
@@ -49,7 +84,7 @@ export function NewAppointmentSheet({ orders }: { orders: OrderOption[] }) {
               </button>
             </div>
 
-            <form action={handleSubmit} className="px-5 py-5 space-y-4 pb-10">
+            <form action={handleSubmit} className="px-5 py-5 space-y-4 pb-6">
               <div>
                 <label className="label">Título *</label>
                 <input
