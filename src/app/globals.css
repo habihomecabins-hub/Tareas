@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta cálida, profesional, mediterránea */
+    --bg: 247 245 240;            /* crema cálido */
+    --surface: 255 254 250;        /* blanco hueso */
+    --surface-2: 241 237 228;      /* arena */
+    --border: 224 218 205;         /* arena oscura */
+    --ink: 31 42 36;               /* verde casi negro */
+    --muted: 110 110 102;          /* gris cálido */
+    --accent: 31 42 36;            /* verde oscuro como acento principal */
+    --accent-ink: 247 245 240;     /* texto sobre acento */
+
+    /* Colores de área */
+    --taller: 178 116 64;          /* terracota */
+    --entrega: 70 100 80;          /* verde oliva */
+    --postventa: 145 90 95;        /* burdeos suave */
+
+    /* Estados */
+    --success: 70 130 90;
+    --warning: 200 140 50;
+    --danger: 180 70 70;
+
+    --font-display: 'Fraunces', 'Georgia', serif;
+    --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  /* Inputs / formularios consistentes */
+  input, select, textarea, button {
+    font-family: inherit;
+  }
+
+  /* Scrollbar minimalista en webkit */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-border rounded-lg shadow-soft;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg
+           font-medium text-sm transition-all
+           disabled:opacity-50 disabled:cursor-not-allowed
+           active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:bg-ink/90;
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface-2 text-ink hover:bg-border/60 border border-border;
+  }
+
+  .btn-ghost {
+    @apply btn hover:bg-surface-2 text-ink;
+  }
+
+  .btn-danger {
+    @apply btn bg-danger text-white hover:bg-danger/90;
+  }
+
+  .input {
+    @apply w-full px-3.5 py-2.5 bg-surface border border-border rounded-lg
+           text-ink placeholder:text-muted text-sm
+           focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-ink/40
+           transition-colors;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-muted uppercase tracking-wide mb-1.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium;
+  }
+}
+
+/* Safe areas para iOS PWA */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.pb-nav { padding-bottom: calc(env(safe-area-inset-bottom) + 76px); }
