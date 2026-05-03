@@ -34,12 +34,15 @@ export function NewAppointmentSheet({ orders }: { orders: OrderOption[] }) {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-ink/40 backdrop-blur-sm animate-fade-in" onClick={() => setOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 bg-ink/40 backdrop-blur-sm animate-fade-in flex items-end sm:items-center justify-center sm:p-4"
+          onClick={() => setOpen(false)}
+        >
           <div
-            className="absolute bottom-0 left-0 right-0 max-w-2xl mx-auto bg-bg rounded-t-3xl shadow-lift animate-slide-up max-h-[90dvh] overflow-y-auto"
+            className="relative w-full sm:max-w-lg bg-bg rounded-t-3xl sm:rounded-2xl shadow-lift animate-slide-up max-h-[90dvh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-bg/95 backdrop-blur border-b border-border px-5 py-4 flex items-center justify-between">
+            <div className="sticky top-0 bg-bg/95 backdrop-blur border-b border-border px-5 py-4 flex items-center justify-between z-10">
               <h2 className="font-display text-lg font-medium">Nueva cita</h2>
               <button onClick={() => setOpen(false)} className="btn-ghost !p-2">
                 <X className="w-5 h-5" />
